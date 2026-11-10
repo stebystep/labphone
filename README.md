@@ -43,6 +43,8 @@ git clone https://github.com/stebystep/labphone.git
 
 ## Install on Linux
 
+**Oracle Linux 8/9 (and RHEL):** follow the step-by-step [Oracle Linux install guide](docs/install-oracle-linux.md).
+
 You need **Node.js 18 or newer** (no npm packages are used) and **openssl** (for the local TLS certificate).
 
 ```bash
