@@ -1,0 +1,11 @@
+[Unit]
+Description=LabPhone SIP softphone engine (web UI on http://127.0.0.1:8460/)
+After=network-online.target
+
+[Service]
+ExecStart=@BIN@ --no-open
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target

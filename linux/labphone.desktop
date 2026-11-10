@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=LabPhone
+GenericName=SIP Softphone
+Comment=SIP softphone for telecom training (UDP/TCP/TLS, SRTP, live SIP ladder)
+Exec=@BIN@
+Icon=labphone
+Terminal=false
+Categories=Network;Telephony;Education;
+Keywords=SIP;VoIP;softphone;telephony;SRTP;TLS;
+StartupNotify=false

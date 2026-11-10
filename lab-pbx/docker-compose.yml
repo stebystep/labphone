@@ -1,0 +1,20 @@
+# Lab PBX (Asterisk 20) for LabPhone.
+#   docker compose up -d --build        start (phones on this computer)
+#   docker compose logs -f              watch the Asterisk console
+#   docker compose down                 stop
+# Classroom: PBX_EXTERNAL_IP=<host LAN IP> PBX_BIND=0.0.0.0 docker compose up -d --build
+# (delete ./certs first so the certificate is re-issued for the new address).
+services:
+  pbx:
+    build: .
+    container_name: labphone-pbx
+    environment:
+      PBX_EXTERNAL_IP: ${PBX_EXTERNAL_IP:-127.0.0.1}
+    ports:
+      - "${PBX_BIND:-127.0.0.1}:5160:5160/udp"
+      - "${PBX_BIND:-127.0.0.1}:5160:5160/tcp"
+      - "${PBX_BIND:-127.0.0.1}:5161:5161/tcp"
+      - "${PBX_BIND:-127.0.0.1}:10000-10099:10000-10099/udp"
+    volumes:
+      - ./certs:/certs
+    restart: unless-stopped

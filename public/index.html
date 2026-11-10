@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LabPhone</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="icon.svg" alt="" width="26" height="26">
+      <span>LabPhone</span>
+    </div>
+    <label class="account-pick">
+      <span class="sr">Account</span>
+      <select id="account-select" title="Active account"></select>
+    </label>
+    <div class="reg" id="reg">
+      <span class="dot"></span>
+      <span class="reg-text" id="reg-text">Not registered</span>
+      <button class="btn small ghost" id="reg-btn" type="button">Register</button>
+    </div>
+    <div class="mwi hidden" id="mwi" title="Voicemail waiting">✉ <span id="mwi-count"></span></div>
+    <div class="spacer"></div>
+    <div class="audio-box">
+      <div class="meters" id="meters" title="Microphone / speaker level">
+        <div class="meter"><span>MIC</span><i id="mic-level"></i></div>
+        <div class="meter"><span>SPK</span><i id="spk-level"></i></div>
+      </div>
+      <button class="btn small" id="audio-btn" type="button">Enable audio</button>
+    </div>
+    <div class="conn" id="conn" title="Connection to the local LabPhone engine"></div>
+  </header>
+
+  <main class="layout">
+    <section class="phone">
+      <div class="card dialer">
+        <div class="dial-row">
+          <input id="target" type="text" autocomplete="off" spellcheck="false" placeholder="1001, user@host or sip:URI">
+          <button class="icon-btn" id="backspace" type="button" title="Delete last character" aria-label="Backspace">⌫</button>
+        </div>
+        <div class="dialpad" id="dialpad"></div>
+        <div class="dial-actions">
+          <button class="btn call" id="call-btn" type="button">Call</button>
+        </div>
+        <p class="hint" id="dial-hint"></p>
+      </div>
+      <div id="calls" class="calls"></div>
+    </section>
+
+    <section class="workspace card">
+      <nav class="tabs" id="tabs">
+        <button data-tab="ladder" class="active" type="button">SIP ladder</button>
+        <button data-tab="media" type="button">Media</button>
+        <button data-tab="accounts" type="button">Accounts</button>
+        <button data-tab="history" type="button">History</button>
+        <button data-tab="messages" type="button">Messages</button>
+      </nav>
+
+      <div class="tab-body" id="tab-ladder">
+        <div class="toolbar">
+          <select id="ladder-filter" title="Show one dialog (Call-ID)"><option value="">All messages</option></select>
+          <input id="ladder-search" type="search" placeholder="Search text…">
+          <label class="check"><input type="checkbox" id="ladder-notes" checked> Notes</label>
+          <label class="check"><input type="checkbox" id="ladder-follow" checked> Follow</label>
+          <div class="spacer"></div>
+          <button class="btn small ghost" id="ladder-export" type="button">Export</button>
+          <button class="btn small ghost" id="ladder-clear" type="button">Clear</button>
+        </div>
+        <div class="ladder-split">
+          <div class="ladder" id="ladder">
+            <div class="ladder-head">
+              <div class="time">Time</div>
+              <div class="lane-head"><span id="lane-local">This phone</span><span>Remote</span></div>
+            </div>
+            <div id="ladder-rows"></div>
+            <p class="empty" id="ladder-empty">SIP messages appear here as they are sent and received. Register or place a call to start.</p>
+          </div>
+          <div class="inspector" id="inspector">
+            <div class="inspector-head" id="inspector-head">Select a message</div>
+            <pre class="raw" id="raw"></pre>
+            <div class="explain" id="explain"><p class="muted">Click any line of a message to see what it means.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-body hidden" id="tab-media">
+        <div class="media-grid" id="media-calls"></div>
+        <div class="card inset">
+          <h3>Audio devices</h3>
+          <div class="form-grid">
+            <label>Microphone <select id="mic-select"></select></label>
+            <label>Speaker <select id="spk-select"></select></label>
+          </div>
+          <p class="hint">Audio runs in this browser tab and is carried to the local engine as 8 kHz PCM, then encoded as G.711 into RTP. Use a headset: browser echo cancellation is limited here.</p>
+        </div>
+      </div>
+
+      <div class="tab-body hidden" id="tab-accounts">
+        <div class="accounts">
+          <div class="account-list">
+            <ul id="account-list"></ul>
+            <button class="btn small" id="new-account" type="button">+ New account</button>
+          </div>
+          <form class="account-form" id="account-form" autocomplete="off"></form>
+        </div>
+      </div>
+
+      <div class="tab-body hidden" id="tab-history">
+        <div class="toolbar"><div class="spacer"></div><button class="btn small ghost" id="history-clear" type="button">Clear history</button></div>
+        <div class="table-wrap"><table class="history"><thead><tr><th></th><th>Party</th><th>When</th><th>Duration</th><th>Result</th><th>Security</th></tr></thead><tbody id="history-rows"></tbody></table></div>
+      </div>
+
+      <div class="tab-body hidden" id="tab-messages">
+        <div class="im-list" id="im-list"></div>
+        <form class="im-form" id="im-form">
+          <input id="im-to" placeholder="To: 1001 or user@host" required>
+          <input id="im-text" placeholder="Message (sent as SIP MESSAGE)" required>
+          <button class="btn" type="submit">Send</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <div class="incoming hidden" id="incoming" role="dialog" aria-live="assertive"></div>
+  <div class="toast hidden" id="toast"></div>
+
+  <script src="sipdocs.js"></script>
+  <script src="audio.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

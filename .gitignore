@@ -1,0 +1,6 @@
+dist/
+node_modules/
+.claude/
+lab-pbx/certs/
+*.log
+.DS_Store

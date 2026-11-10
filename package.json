@@ -1,0 +1,46 @@
+{
+  "name": "labphone",
+  "version": "1.0.0",
+  "description": "LabPhone - a SIP softphone for telecom training: SIP over UDP/TCP/TLS, SRTP, browser UI, live SIP ladder.",
+  "license": "MIT",
+  "bin": {
+    "labphone": "bin/labphone.js"
+  },
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node bin/labphone.js",
+    "test": "node --test --test-timeout=60000 test/*.test.js",
+    "test:linux": "docker build -f test/linux/Dockerfile -t labphone-linux-test . && docker run --rm labphone-linux-test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin",
+    "src",
+    "public",
+    "linux",
+    "README.md",
+    "LICENSE"
+  ],
+  "author": "Marco Mouta",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stebystep/labphone.git"
+  },
+  "homepage": "https://github.com/stebystep/labphone",
+  "bugs": {
+    "url": "https://github.com/stebystep/labphone/issues"
+  },
+  "keywords": [
+    "sip",
+    "voip",
+    "softphone",
+    "srtp",
+    "tls",
+    "telecom",
+    "training",
+    "education",
+    "asterisk"
+  ]
+}
